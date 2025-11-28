@@ -1,15 +1,14 @@
-<div class="meals-drinks-list-container">
-    <h3>All Drinks List</h3>
+<center><h3>All Drinks List</h3></center>
 
-  <% if (drinks && drinks.length) { %>
-  <ol>
-    <% drinks.forEach(function(d) { %>
-    <li>
-      <a href="/drink/<%= d.idDrink %>"><%= d.strDrink %></a>
-    </li>
-    <% }) %>
-  </ol>
-  <% } else { %>
-  <p>No drinks available.</p>
-  <% } %>
+<div class="recipes-grid">
+  <% drinks.forEach(d => { %>
+    <div class="recipe-card">
+      <a href="/drink/<%= d.idDrink %>">
+        <img src="<%= d.strDrinkThumb %>" alt="<%= d.strDrink %>">
+      </a>
+      <a href="/drink/<%= d.idDrink %>" class="recipe-name">
+        <%= d.strDrink %>
+      </a>
+    </div>
+  <% }) %>
 </div>

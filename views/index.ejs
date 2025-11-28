@@ -8,7 +8,15 @@
 </head>
 <body>
   <%- include("partials/header") %> 
-  <%- include("partials/meals-list") %> 
-  <%- include("partials/drinks-list") %>
+  <div class="lists-wrapper">
+    <div class="meals-drinks-list-container">
+      <%- include("partials/meals-list", { meals }) %>
+    </div>
+
+    <div class="meals-drinks-list-container">
+      <%- include("partials/drinks-list", { drinks }) %>
+    </div>
+  </div>
+
 </body>
 </html>

@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Results for "<%= q %>"</title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <%- include("partials/header") %>
@@ -28,9 +29,15 @@
   <hr>
 
   <!-- ALWAYS show meal + drink list -->
-  <%- include("partials/meals-list", { meals }) %>
+<div class="lists-wrapper">
+    <div class="meals-drinks-list-container">
+      <%- include("partials/meals-list", { meals }) %>
+    </div>
 
-  <%- include("partials/drinks-list", { drinks }) %>
+    <div class="meals-drinks-list-container">
+      <%- include("partials/drinks-list", { drinks }) %>
+    </div>
+</div>
 
 </body>
 </html>
