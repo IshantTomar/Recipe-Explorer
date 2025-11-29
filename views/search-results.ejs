@@ -6,38 +6,54 @@
   <title>Search Results for "<%= q %>"</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
-<body>
+<body style="margin-left: 20px;">
   <%- include("partials/header") %>
-  <h2>Search Results</h2>
+  <p style="font-size: 30px; font-weight: bold; background-color: rgba(0, 0, 0, 0.4);
+    margin: 20px 0; padding: 5px; border-radius: 8px;"><u>Search Results for "<%= q %>":</u></p>
 
   <% if (foundMeal || foundDrink) { %>
 
       <% if (foundMeal) { %>
-         <h3>Matched Meal</h3>
-         <p><a href="/meal/<%= foundMeal.idMeal %>"><%= foundMeal.strMeal %></a></p>
+         <p style="color: rgb(0, 255, 0); font-size: 20px; background-color: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 3px; margin: 20px 0;">Matched Meal:</p>
+         <div class="recipe-card" style="padding: 5px;  margin-bottom: 20px; justify-content: flex-start; width: 150px;">
+      <a href="/meal/<%= foundMeal.idMeal %>">
+        <img src="<%= foundMeal.strMealThumb %>" alt="<%= foundMeal.strMeal %>">
+      </a>
+      <a href="/meal/<%= foundMeal.idMeal %>" class="recipe-name">
+        <%= foundMeal.strMeal %>
+      </a>
+    </div>
      <% } %>
 
       <% if (foundDrink) { %>
-         <h3>Matched Drink</h3>
-         <p><a href="/drink/<%= foundDrink.idDrink %>"><%= foundDrink.strDrink %></a></p>
+         <p style="color: rgb(0, 255, 0); font-size: 20px; background-color: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 3px; margin: 20px 0;">Matched Drink:</p>
+         <div class="recipe-card" style="padding: 5px;  margin-bottom: 20px; justify-content: flex-start; width: 150px;">
+      <a href="/drink/<%= foundDrink.idDrink %>">
+        <img src="<%= foundDrink.strDrinkThumb %>" alt="<%= foundDrink.strDrink %>">
+      </a>
+      <a href="/drink/<%= foundDrink.idDrink %>" class="recipe-name">
+        <%= foundDrink.strDrink %>
+      </a>
+    </div>
       <% } %>
 
   <% } else { %>
-     <p>No exact matches found for "<%= q %>".</p>
+     <p style="color: red; font-size: 20px; background-color: rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 3px;">No exact matches found for "<%= q %>".</p>
   <% } %>
-
   <hr>
-
   <!-- ALWAYS show meal + drink list -->
-<div class="lists-wrapper">
-    <div class="meals-drinks-list-container">
-      <%- include("partials/meals-list", { meals }) %>
-    </div>
+  <div style="background-color: rgba(0, 0, 0, 0.2); padding: 10px;">
+    <h2><b><u><center>Available Meals and Drinks:</center></u></b></h2>
+    <div class="lists-wrapper">
+     <div class="meals-drinks-list-container">
+       <%- include("partials/meals-list", { meals }) %>
+      </div>
 
-    <div class="meals-drinks-list-container">
-      <%- include("partials/drinks-list", { drinks }) %>
+      <div class="meals-drinks-list-container">
+       <%- include("partials/drinks-list", { drinks }) %>
+      </div>
     </div>
-</div>
+  </div>
 
 </body>
 </html>

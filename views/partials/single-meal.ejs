@@ -3,21 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title><%= meal.strMeal %></title>
+  <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <img src="<%= meals.strMealThumb %>" alt="<%= meals.strMeal %>">
-  <h1><%= meals.strMeal %></h1>
-  <h3>Ingredients</h3>
-  <ol>
-    <% for (let i = 1; i <= 20; i++) { 
-         const ing = meals['strIngredient' + i];
-         const measure = meals['strMeasure' + i];
-         if (ing && ing.trim() !== '') { %>
-      <li><%= measure %> <%= ing %></li>
-    <% } } %>
-  </ol>
-  <h3>Instructions</h3>
-  <pre><%= meals.strInstructions %></pre>
+  <%- include("header") %>
+
+  <div class="single-recipe-card">
+    <img src="<%= meal.strMealThumb %>" alt="<%= meal.strMeal %>" width="400px">
+    <h2 class="section-title"><%= meal.strMeal %></h2>
+    <button id="fav-btn" 
+        data-id="<%= meal.idMeal %>" 
+        data-name="<%= meal.strMeal %>" 
+        data-thumb="<%= meal.strMealThumb %>" 
+        data-type="meal">
+  ❤️ Add to Favorites
+</button>
+  </div>
+ <div class="single-content-container">
+    <h1 class="section-title"><u>Ingredients and Measures</u></h1>
+    <table>
+      <tr>
+       <th>Ingredients</th>
+       <th>Measures</th>
+      </tr>
+
+      <% for (let i = 1; i <= 20; i++) { 
+           const ing = meal['strIngredient' + i];
+           const measure = meal['strMeasure' + i];
+           if (ing && ing.trim() !== '') { %>
+        <tr>
+          <td><%= ing %></td>
+          <td><%= measure %></td>
+        </tr>
+      <% } } %>
+    </table>
+    </div>
+  <div class="single-content-container">
+   <h1 class="section-title"><u>Instructions</u></h1>
+   <pre class="instructions"><%= meal.strInstructions %></ pre>
+   </div>
+   <h3 style="margin-bottom: 50px;"><b><u><center>Enjoy  your meal!</center></u></b></h3>
+
+    <hr>
+<div style="background-color: rgba(0, 0, 0, 0.2); padding: 10px;">
+    <h2><b><u><center>Available Meals and Drinks:</center></u></b></h2>
+    <div class="lists-wrapper">
+     <div class="meals-drinks-list-container">
+       <%- include("meals-list", { meals }) %>
+      </div>
+
+      <div class="meals-drinks-list-container">
+       <%- include("drinks-list", { drinks }) %>
+      </div>
+    </div>
+  </div>
+  <script src="/js/favorites.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('fav-btn');
+    window.favHelpers.wireSingleFavoriteButton('fav-btn');
+
+    // disable if already in favorites
+    if (btn) {
+      const list = window.favHelpers.getFavorites();
+      const id = btn.dataset.id;
+      const type = btn.dataset.type;
+      if (list.some(x => x.id === id && x.type === type)) {
+        btn.textContent = "❤️ Added to Favorites";
+        btn.disabled = true;
+      }
+    }
+  });
+</script>
+
 </body>
 </html>

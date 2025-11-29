@@ -1,10 +1,82 @@
-<img src="<%= drinks.strDrinkThumb %>" alt="<%= drinks.strDrink %>">
-<h1><%= drinks.strDrink %></h1>
-<ol>
-  <% for (let i = 1; i <= 20; i++) { 
-       const ing = drinks['strIngredient' + i];
-       const measure = drinks['strMeasure' + i];
-       if (ing && ing.trim() !== '') { %>
-    <li><%= measure %> <%= ing %></li>
-  <% } } %>
-</ol>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= drink.strDrink %></title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <%- include("header") %>
+
+  <div class="single-recipe-card">
+    <img src="<%= drink.strDrinkThumb %>" alt="<%= drink.strDrink %>" width="400px">
+    <h2 class="section-title"><%= drink.strDrink %></h2>
+    <button id="fav-drink-btn" 
+        data-id="<%= drink.idDrink %>" 
+        data-name="<%= drink.strDrink %>" 
+        data-thumb="<%= drink.strDrinkThumb %>" 
+        data-type="drink">
+  ❤️ Add to Favorites
+</button>
+
+  </div>
+ <div class="single-content-container">
+    <h1 class="section-title"><u>Ingredients and Measures</u></h1>
+    <table>
+      <tr>
+       <th>Ingredients</th>
+       <th>Measures</th>
+      </tr>
+
+      <% for (let i = 1; i <= 20; i++) { 
+           const ing = drink['strIngredient' + i];
+           const measure = drink['strMeasure' + i];
+           if (ing && ing.trim() !== '') { %>
+        <tr>
+          <td><%= ing %></td>
+          <td><%= measure %></td>
+        </tr>
+      <% } } %>
+    </table>
+    </div>
+  <div class="single-content-container">
+   <h1 class="section-title"><u>Instructions</u></h1>
+   <pre class="instructions"><%= drink.strInstructions %></ pre>
+   </div>
+   <h3 style="margin-bottom: 50px;"><b><u><center>Enjoy  your meal!</center></u></b></h3>
+
+    <hr>
+<div style="background-color: rgba(0, 0, 0, 0.2); padding: 10px;">
+    <h2><b><u><center>Available Meals and Drinks:</center></u></b></h2>
+    <div class="lists-wrapper">
+     <div class="meals-drinks-list-container">
+       <%- include("meals-list", { meals }) %>
+      </div>
+
+      <div class="meals-drinks-list-container">
+       <%- include("drinks-list", { drinks }) %>
+      </div>
+    </div>
+  </div>
+  <script src="/js/favorites.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btn = document.getElementById('fav-btn');
+    window.favHelpers.wireSingleFavoriteButton('fav-btn');
+
+    // disable if already in favorites
+    if (btn) {
+      const list = window.favHelpers.getFavorites();
+      const id = btn.dataset.id;
+      const type = btn.dataset.type;
+      if (list.some(x => x.id === id && x.type === type)) {
+        btn.textContent = "❤️ Added to Favorites";
+        btn.disabled = true;
+      }
+    }
+  });
+</script>
+
+</body>
+</html>

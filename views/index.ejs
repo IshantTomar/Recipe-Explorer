@@ -8,6 +8,12 @@
 </head>
 <body>
   <%- include("partials/header") %> 
+  <h2 class="section-title">⭐ Favorite Meals</h2>
+<div id="favorite-meals" class="favorites-row"></div>
+
+<h2 class="section-title">⭐ Favorite Drinks</h2>
+<div id="favorite-drinks" class="favorites-row"></div>
+
   <div class="lists-wrapper">
     <div class="meals-drinks-list-container">
       <%- include("partials/meals-list", { meals }) %>
@@ -17,6 +23,12 @@
       <%- include("partials/drinks-list", { drinks }) %>
     </div>
   </div>
+<script src="/js/favorites.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    window.favHelpers.initIndexFavorites();
+  });
+</script>
 
 </body>
 </html>

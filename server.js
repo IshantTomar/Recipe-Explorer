@@ -102,28 +102,33 @@ app.get("/search", async (req, res) => {
     });
 });
 
-//single meal route
+// Single meal route
 app.get("/meal/:id", async (req, res) => {
     const id = req.params.id;
 
+    const meals = await fetchMeals();
+    const drinks = await fetchDrinks();
     const data = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`);
     const json = await data.json();
 
-    const meals = json.meals ? json.meals[0] : null;
+    const meal = json.meals ? json.meals[0] : null;
 
-    res.render("partials/single-meal", { meals });
+    res.render("partials/single-meal", { meal, meals, drinks });
 });
+
 
 //single drink route
 app.get("/drink/:id", async (req, res) => {
     const id = req.params.id;
 
+    const meals = await fetchMeals();
+    const drinks = await fetchDrinks();
     const data = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`);
     const json = await data.json();
 
-    const drinks = json.drinks ? json.drinks[0] : null;
+    const drink = json.drinks ? json.drinks[0] : null;
 
-    res.render("partials/single-drink", { drinks });
+    res.render("partials/single-drink", { drink, meals, drinks });
 });
 
 // Start the server
